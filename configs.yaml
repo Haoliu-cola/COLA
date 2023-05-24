@@ -3,22 +3,14 @@ Cora: &Cora
   num_classes: 7
   num_samples: 2708
   dataset: Cora
-  class_split_ratio: [0, 5, 2]
-  #class_split_ratio: [3, 2, 2]
+  class_split_ratio: [3, 2, 2]
 
 CiteSeer: &CiteSeer
   input_dim: 3703
   num_classes: 6
   num_samples: 3327
   dataset: CiteSeer
-  class_split_ratio: [0, 4, 2]
-  #class_split_ratio: [2, 2, 2]
-
-PubMed: &PubMed
-  input_dim: 500
-  num_classes: 3
-  num_samples: 19717
-  dataset: PubMed
+  class_split_ratio: [2, 2, 2]
 
 CoraFull: &CoraFull
   input_dim: 8710
@@ -32,14 +24,14 @@ Computers: &Computers
   num_classes: 10
   num_samples: 13752
   dataset: Computers
-  #class_split_ratio: [4, 3, 3]
-  class_split_ratio: [0, 7, 3]
+  class_split_ratio: [4, 3, 3]
 
-Photo: &Photo
-  input_dim: 745
-  num_classes: 8
-  num_samples: 7650
-  dataset: Photo
+Coauthor-CS: &Coauthor-CS
+  input_dim: 6805
+  num_classes: 15
+  num_samples: 18333
+  dataset: Coauthor-CS
+  class_split_ratio: [5, 5, 5]
 
 ogbn-arxiv: &ogbn-arxiv
   input_dim: 128
@@ -123,6 +115,29 @@ Computers-GFS: &Computers-GFS
 
 CoraFull-GFS: &CoraFull-GFS
   <<: *CoraFull
+  activation: 'relu'
+  base_model: 'GCN'
+  num_layers: 1
+  hidden_dim: 256
+  out_dim: 128
+  tau: 0.7
+  temperature2: 0.7
+  lr: 5e-4
+  weight_decay: 1e-5
+  dropout: 0.1
+  task_num: 50
+  train_task_num: 50
+  fs_rate: 1
+  num_negatives: 39586
+  f1: 0.2
+  f2: 0.1
+  f3: 0.1
+  e1: 0.3
+  e2: 0.2
+  e3: 0.2
+
+Coauthor-CS-GFS: &Coauthor-CS-GFS
+  <<: *Coauthor-CS
   activation: 'relu'
   base_model: 'GCN'
   num_layers: 1
