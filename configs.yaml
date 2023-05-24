@@ -1,0 +1,166 @@
+Cora: &Cora
+  input_dim: 1433
+  num_classes: 7
+  num_samples: 2708
+  dataset: Cora
+  class_split_ratio: [0, 5, 2]
+  #class_split_ratio: [3, 2, 2]
+
+CiteSeer: &CiteSeer
+  input_dim: 3703
+  num_classes: 6
+  num_samples: 3327
+  dataset: CiteSeer
+  class_split_ratio: [0, 4, 2]
+  #class_split_ratio: [2, 2, 2]
+
+PubMed: &PubMed
+  input_dim: 500
+  num_classes: 3
+  num_samples: 19717
+  dataset: PubMed
+
+CoraFull: &CoraFull
+  input_dim: 8710
+  num_classes: 70
+  num_samples: 19793
+  dataset: CoraFull
+  class_split_ratio: [38, 15, 15]
+
+Computers: &Computers
+  input_dim: 767
+  num_classes: 10
+  num_samples: 13752
+  dataset: Computers
+  #class_split_ratio: [4, 3, 3]
+  class_split_ratio: [0, 7, 3]
+
+Photo: &Photo
+  input_dim: 745
+  num_classes: 8
+  num_samples: 7650
+  dataset: Photo
+
+ogbn-arxiv: &ogbn-arxiv
+  input_dim: 128
+  num_classes: 40
+  num_samples: 169343
+  dataset: ogbn-arxiv
+  class_split_ratio: [20, 10, 10]
+
+
+
+Cora-GFS: &Cora-GFS
+  <<: *Cora
+  activation: 'relu'
+  base_model: 'GCN'
+  num_layers: 2
+  hidden_dim: 256
+  out_dim: 128
+  tau: 0.4
+  lr: 5e-4
+  weight_decay: 1e-5
+  head_hidden_dim: 128
+  head_lr: 1e-3
+  head_weight_decay: 1e-3
+  task_num: 50
+  train_task_num: 20
+  fs_rate: 1
+  num_negatives: 27080
+  f1: 0.3
+  f2: 0.4
+  f3: 0.4
+  e1: 0.2
+  e2: 0.4
+  e3: 0.4
+
+CiteSeer-GFS: &CiteSeer-GFS
+  <<: *CiteSeer
+  activation: 'relu'
+  base_model: 'GCN'
+  num_layers: 2
+  hidden_dim: 256
+  out_dim: 128
+  tau: 0.4
+  lr: 5e-4
+  weight_decay: 1e-5
+  dropout: 0
+  head_hidden_dim: 512
+  head_lr: 1e-3
+  head_weight_decay: 1e-3
+  task_num: 50
+  train_task_num: 20
+  fs_rate: 1
+  num_negatives: 3327
+  f1: 0.3
+  f2: 0.4
+  f3: 0.4
+  e1: 0.2
+  e2: 0.4
+  e3: 0.4
+
+Computers-GFS: &Computers-GFS
+  <<: *Computers
+  activation: 'relu'
+  base_model: 'GCN'
+  num_layers: 1
+  hidden_dim: 256
+  out_dim: 128
+  tau: 0.7
+  lr: 5e-4
+  weight_decay: 1e-5
+  dropout: 0.1
+  task_num: 100
+  train_task_num: 100
+  fs_rate: 1
+  num_negatives: 27504
+  f1: 0.2
+  f2: 0.1
+  f3: 0.1
+  e1: 0.5
+  e2: 0.4
+  e3: 0.4
+
+CoraFull-GFS: &CoraFull-GFS
+  <<: *CoraFull
+  activation: 'relu'
+  base_model: 'GCN'
+  num_layers: 1
+  hidden_dim: 256
+  out_dim: 128
+  tau: 0.7
+  temperature2: 0.7
+  lr: 5e-4
+  weight_decay: 1e-5
+  dropout: 0.1
+  task_num: 50
+  train_task_num: 50
+  fs_rate: 1
+  num_negatives: 39586
+  f1: 0.2
+  f2: 0.1
+  f3: 0.1
+  e1: 0.3
+  e2: 0.2
+  e3: 0.2
+
+ogbn-arxiv-GFS: &ogbn-arxiv-GFS
+  <<: *ogbn-arxiv
+  activation: 'relu'
+  base_model: 'GCN'
+  num_layers: 2
+  hidden_dim: 256
+  out_dim: 128
+  tau: 0.5
+  lr: 1e-3
+  weight_decay: 0
+  dropout: 0.1
+  head_hidden_dim: 128
+  head_lr: 1e-3
+  head_weight_decay: 1e-3
+  task_num: 100
+  train_task_num: 100
+  q_query: 20
+  fs_rate: 1
+  num_negatives: 169343
+
