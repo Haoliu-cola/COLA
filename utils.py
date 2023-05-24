@@ -3,17 +3,17 @@ import torch
 from ruamel.yaml import YAML
 
 def get_args():
-    yaml_path = '/project/tantra/liuhao/GCL/GFS/configs.yaml'
+    yaml_path = 'configs.yaml'
     parser = argparse.ArgumentParser(description='Here is Meta Learning for Graph data.')
 
     parser.add_argument('--use_cuda', action='store_true', default=True)
-    parser.add_argument('--data_path', type=str, default='/project/tantra/liuhao/graphdata')
-    parser.add_argument('--save_dir', type=str, default='/project/tantra/liuhao/graphdata/save')
+    parser.add_argument('--data_path', type=str, default='./graphdata')
+    parser.add_argument('--save_dir', type=str, default='./graphdata/save')
 
     parser.add_argument('--name', type=str, default='GFS')
     parser.add_argument('--exp_name', type=str, default='F')
     parser.add_argument('--model_name', type=str, default='GFS')
-    parser.add_argument('--random_seed', type=int, default=1234)
+    parser.add_argument('--random_seed', type=int, default=231)
     parser.add_argument('--num_workers', type=int, default=0)
 
     parser.add_argument('--dataset', type=str, default='Cora')
@@ -53,9 +53,9 @@ def get_args():
 
     parser.add_argument('--label_mask', type=int, default=0)
     parser.add_argument('--khop_mask', type=int, default=0)
-    parser.add_argument('--self_mask', type=bool, default=False, help='Mask the node itself in the queue.')
+    parser.add_argument('--self_mask', type=bool, default=False, help='Mask the node itself search process.')
     parser.add_argument('--k_rate', type=int, default=1)
-    parser.add_argument('--mmt', type=float, default=0.999)
+    parser.add_argument('--mmt', type=float, default=0.9)
     parser.add_argument('--em_scd', type=int ,default=0)
 
     parser.add_argument('--f1', type=float, default=0.3, help='Augmentation ratio for the first feature.')
@@ -78,10 +78,6 @@ def get_args():
         except KeyError:
             raise AssertionError('KeyError: there is no {} in yamls'.format(args_key), "red")
 
-    # Update params from .yamls
-    #for running
-    #args = parser.parse_args()
-    #for jupyter notebook
     args = parser.parse_args()
 
     return args
