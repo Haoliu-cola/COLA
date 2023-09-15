@@ -11,10 +11,9 @@ import torch
 from ogb.nodeproppred import PygNodePropPredDataset
 from torch.utils.data import BatchSampler
 from torch.utils.data import DataLoader, Dataset
-from torch_geometric.datasets import Planetoid, Amazon, CoraFull, Coauthor
-
+from torch_geometric.datasets import Planetoid, Amazon, CoraFull, Coauthor, HeterophilousGraphDataset
 import torch_geometric.transforms as T
-
+from torch_geometric.utils import to_undirected
 
 def load_dataset(args):
     """
@@ -28,7 +27,8 @@ def load_dataset(args):
                           ["Computers", "Photo"],
                           ["ogbn-arxiv", "ogbn-mag", "ogbn-products]"],
                           ["CoraFull"],
-                          ["Coauthor-CS"]]
+                          ["Coauthor-CS"],
+                          ["Roman-empire"]]
     for cls, dataset_lst in enumerate(available_datasets):
         for dataset in dataset_lst:
             relation_dic[dataset] = cls
@@ -41,12 +41,21 @@ def load_dataset(args):
         dataset = Amazon(args.data_path, args.dataset, transform=T.NormalizeFeatures())
     elif relation_dic[args.dataset] == 2:
         dataset = PygNodePropPredDataset(root=args.data_path, name=args.dataset, transform=T.NormalizeFeatures())
+        # change arxiv to undirected graph
+        edge_index = to_undirected(dataset._data.edge_index)
+        set_dataset_attr(dataset, 'edge_index', edge_index,
+                         edge_index.shape[1])
         # dataset.y = dataset.y.squeeze()
         # print(dataset[0].y)
     elif relation_dic[args.dataset] == 3:
         dataset = CoraFull(root=args.data_path+'/'+args.dataset, transform=T.NormalizeFeatures())
     elif relation_dic[args.dataset] == 4:
         dataset = Coauthor(root=args.data_path, name="CS", transform=T.NormalizeFeatures())
+    elif relation_dic[args.dataset] == 5:
+        dataset = HeterophilousGraphDataset(root=args.data_path, name="Roman-empire", transform=T.NormalizeFeatures())
+        edge_index = to_undirected(dataset._data.edge_index)
+        set_dataset_attr(dataset, 'edge_index', edge_index,
+                         edge_index.shape[1])
     else:
         raise ValueError(f"Unknown dataset: {args.dataset}. Please choose from {available_datasets}")
 
@@ -259,3 +268,9 @@ class IndexDataset3(Dataset):
 
     def __len__(self):
         return self.len
+
+def set_dataset_attr(dataset, name, value, size):
+    dataset._data_list = None
+    dataset.data[name] = value
+    if dataset.slices is not None:
+        dataset.slices[name] = torch.tensor([0, size], dtype=torch.long)
