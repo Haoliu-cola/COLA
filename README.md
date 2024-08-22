@@ -1,5 +1,5 @@
 # Graph Contrastive Learning Meets Graph Meta Learning: A Unified Method for Few-shot Node Tasks
-This repository is the implementation of the model COLA from paper: **Graph Contrastive Learning Meets Graph Meta Learning: A Unified Method for Few-shot Node Tasks**.
+This repository is the implementation of the model COLA from paper: [**Graph Contrastive Learning Meets Graph Meta Learning: A Unified Method for Few-shot Node Tasks**](https://dl.acm.org/doi/abs/10.1145/3589334.3645367).
 
 ## Requirements
 ```
@@ -14,8 +14,19 @@ ruamel.yaml=0.17.21
 ```
 
 ## Usages
-Using following command the run the code. 
-Here is the example of running a 2-way 5-shot task on CiteSeer dataset.
+Please use the following command to run the code. 
+Here is an example of running a 2-way 5-shot task on the CiteSeer dataset.
 ```
 python main.py --dataset=CiteSeer --n_way=2 --k_shot=5
+```
+
+## Citation
+```
+@inproceedings{liu2024graph,
+  title={Graph Contrastive Learning Meets Graph Meta Learning: A Unified Method for Few-shot Node Tasks},
+  author={Liu, Hao and Feng, Jiarui and Kong, Lecheng and Tao, Dacheng and Chen, Yixin and Zhang, Muhan},
+  booktitle={Proceedings of the ACM on Web Conference 2024},
+  pages={365--376},
+  year={2024}
+}
 ```
